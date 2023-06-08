@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>word-counter</title>
+<style>
+textarea {
+width: 720px;
+height:400px;
+//border: none;
+resize: none;
+}
+</style>
+</head>
+<body>
+
+<form class="lettercountform">
+<textarea id="lettercountextarea" class="lettercount-textarea" spellcheck="false" placeholder="Please enter text or copy and paste the document."></textarea>
+</form>
+<div class="lettercountsummary">
+<div id="result">&nbsp;</div>
+</div>
+
+<script>
+function wordCount(val) {
+	var wom = val.match(/\S+/g);
+	return {
+		charactersNoSpaces: val.replace(/\s+/g, '').length,
+		characters: val.length,
+		words: wom ? wom.length : 0,
+		lines: val.split(/\r*\n/).length
+	};
+}
+
+var textarea = document.getElementById('lettercountextarea');
+var result = document.getElementById('result');
+
+result.innerHTML = (`
+	without spaces : 0
+	<br>with spaces : 0
+	<br>words: 0
+	<br>lines: 0
+`);	
+	
+textarea.addEventListener('input', function() {
+	var wc = wordCount(this.value);
+	result.innerHTML = (`
+		without spaces : ${wc.charactersNoSpaces}
+		<br>with spaces : ${wc.characters}
+		<br>words : ${wc.words}
+		<br>lines : ${wc.lines}
+	`);
+});
+</script>
+
+</body>
+</html>

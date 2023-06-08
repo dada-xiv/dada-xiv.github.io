@@ -1,0 +1,362 @@
+<html>
+<head><title>VI 사용법 </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<style type="text/css">
+<!--
+td, body{font-size:12px;font-family:Verdana,'돋움';}
+tt{font-family:"Lucida Console", Verdana,'Garamond',"Sans Serif";background-color:e0e0e0;}
+.xx {color:ea702a;}
+a{color:cc8233;}
+h4{text-decoration:underline;}
+-->
+</style>
+</head>
+
+<body>
+<h3>Vi 사용하기</h3>
+
+<h4>Vi 시작하기</h4>
+
+<ul>
+<li> <tt>$ vi </tt> : vi 시작하기
+<li> <tt>$ vi aaa.txt </tt> : aaa.txt 파일을 편집하면서 vi 시작
+<li> <tt>$ vi -R aaa.txt </tt> : 읽기 전용으로 열기
+</ul>
+
+<table border=0 cellspacing=0 cellpadding=5>
+<tr>
+<td>&nbsp;</td>
+<td valign=bottom align=center><tt>Esc</tt></td>
+<td>&nbsp;</td>
+<td valign=bottom align=center><tt>:</tt> 또는 <tt>/</tt></td>
+<td>&nbsp;</td>
+</tr><tr>
+<td 
+style="font-size:16px;font-weight:bold;padding:10px;border:1px solid black;">
+편집상태</td>
+<td align=center style="font-size:60px;line-height:0.4;">&rarr; <br> &larr;</td>
+<td 
+style="font-size:16px;font-weight:bold;padding:10px;border:1px solid black;">
+명령대기상태<br>(Esc모드)</td>
+<td align=center style="font-size:60px;line-height:0.4;">&rarr; <br> &larr;</td>
+<td 
+style="font-size:16px;font-weight:bold;padding:10px;border:1px solid black;">
+명령줄상태</td>
+</tr><tr>
+<td>&nbsp;</td>
+<td valign=top align=center><tt>삽입명령어<br>i,a,A,I,o,O</tt></td>
+<td>&nbsp;</td>
+<td valign=top align=center><tt>Esc</tt> 또는 <tt>Enter</tt> </td>
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<ul>
+<li>명령대기상태 &rarr; 편집상태 : <tt>삽입명령어</tt> (아래참조.)
+<li>편집상태 &rarr; 명령대기상태 : <tt>Esc</tt>글쇠.
+<li>명령대기상태 &rarr; 명령줄상태 : <tt>:</tt> 또는 
+<tt>/</tt> (아래참조)
+<li>명령줄상태 &rarr; 명령대기상태 : <tt>Esc</tt> 또는 
+<tt>Enter</tt> (아래참조)
+</ul>
+
+<h4>인코딩 전환</h4>
+<tt>Esc</tt>로 명령대기상태로 간 뒤 <tt>:</tt>을 눌러 명령어 모드로 들어간다.
+다음과 같이 설정 및 변환을 할 수 있다.
+<ul>
+<li><tt>:set fileencoding=utf-8</tt> (UTF-8)</li>
+<li><tt>:set fileencoding=euc-kr</tt> (한글 완성형)</li>
+<li><tt>:set fileencoding=cp949</tt> (MS 확장 한글 완성형)</li>
+<li><tt>:set fileencoding=cp437</tt> (영문)</li>
+</ul>
+혹은 .vimrc 설정 파일에
+<pre>set fileencoding=utf-8,euc-kr</pre>
+라고 쓰면 자동으로 utf-8 혹은 euc-kr 중에서 판별하여 인코딩을 정해준다. 
+또한
+<pre>set encoding=utf-8</pre>
+로 하면 vi를 시작할 때 새로운 파일의 인코딩을 utf-8로 열게 된다.
+<br/>
+<br/>
+* PuTTY에서 설정할 때는, '창&rarr;변환&rarr;수신한 데이터를 
+이 문자셋으로 가정'에서 UTF-8로 하여 저장한다.<br/>
+* 화면이 깨져서 나올때는 .cshrc에 다음과 같이 적용해보라.
+<pre>setenv LANG ko_KR.UTF-8</pre>
+혹은 .bashrc에서는 
+<pre>export LANG=ko_KR.UTF-8</pre>
+와 같이 설정한다.
+
+
+<h4>커서의 이동 </h4>
+
+<ul>
+<li> <tt>h</tt>, <tt>l</tt>, <tt>j</tt>, <tt>k</tt> : 왼쪽(&larr;, Back space), 
+오른쪽(&rarr;, space), 
+위(&uarr;), 아래(&darr;)
+<li> <tt>b</tt>, <tt>w</tt> : 이전 단어의 첫 글자로 / 다음 단어의 첫 글자로 이동.
+<li> <tt>B</tt>, <tt>W</tt> : 이전 단어의 첫 글자로 / 다음 단어의 첫 글자로 이동. (문장부호 무시)
+<li> <tt>e</tt> : 다음 단어의 끝 글자로 이동. 
+<li> <tt>E</tt> : 다음 단어의 끝 글자로 이동. (문장부호 무시)
+<li> <tt>H</tt>, <tt>M</tt>, <tt>L</tt> : 화면의 맨 위/ 중간 / 맨 아래로
+<li> <tt>0</tt> : 그 줄의 맨 처음으로 (숫자 0이다.)
+<li> <tt>$</tt> : 그 줄의 맨 끝으로 
+<li> <tt>+</tt> : 다음 줄의 처음으로 
+<li> <tt>-</tt> : 윗 줄의 처음으로 
+<li> <tt>3|</tt> : 현재 줄의 3번째 열로 
+<li> <tt>4H</tt> : 화면 상의 처음 줄부터 4줄 밑으로 
+<li> <tt>4L</tt> : 화면 상의 마지막 줄부터 4줄 위로 
+<li> <tt>(</tt>, <tt>)</tt> : 이전 문장의 시작으로 / 다음 문장의 시작으로
+<li> <tt>{</tt>, <tt>}</tt> : 이전 문단의 시작으로 / 다음 문단의 시작으로
+<li> <tt>[[</tt>, <tt>]]</tt> : 이전 섹션의 시작으로 / 다음 섹션의 시작으로
+</ul>
+
+<h4>편집 버퍼를 통한 이동</h4>
+<ul>
+<li> <tt>^F</tt>, <tt>^B</tt> : 한 화면 앞으로 / 뒤로 (^는 <tt>Ctrl</tt>글쇠를 의미.)
+<li> <tt>^D</tt>, <tt>^U</tt> : 반 화면 앞으로 / 뒤로
+<li> <tt>4^B</tt> : 4화면 위로 이동
+<li> <tt>4^F</tt> : 4화면 아래로 이동
+<li> <tt>7^U</tt> : 7줄 위로 이동
+<li> <tt>7^D</tt> : 7줄 아래로 이동
+<li> <tt>^Y</tt> : 커서는 현재 위치 그대로 화면만 한 줄씩 아래로 이동
+<li> <tt>^E</tt> : 커서는 현재 위치 그대로 화면만 한 줄씩 위로 이동
+</ul>
+
+<h4>행 단위 이동</h4>
+
+<ul>
+<li> <tt>:0</tt> : 파일의 첫 번째 행으로 가기 (숫자 0)
+<li> <tt>:10</tt> : 10번째 행으로 가기
+<li> <tt>:$</tt> : 파일의 마지막 행으로 가기
+<li> <tt>G</tt> : 파일의 마지막 행으로 가기
+<li> <tt>10G</tt> : 10번째 행으로 가기
+</ul>
+
+<h4>삽입명령어  </h4>
+
+<ul>
+<li> <tt>i</tt> : 커서 위치부터 삽입 시작
+<li> <tt>a</tt> : 커서 위치 오른쪽부터 삽입 시작  
+<li> <tt>A</tt> : 현재 줄의 맨 끝 부터 삽입 시작 
+<li> <tt>I</tt> : 현재 줄의 맨 처음 부터 삽입 시작  
+<li> <tt>o</tt> : 커서 아래에 행 삽입
+<li> <tt>O</tt> : 커서 위에 행 삽입
+</ul>
+
+<h4>삭제명령 </h4>
+
+<ul>
+<li> <tt>x</tt> : 현재 커서위치의 한 문자 삭제 
+<li> <tt>X</tt> : 현재 커서 왼쪽의 한 문자 삭제 
+<li> <tt>dd</tt> : 한 줄 지우기
+<li> <tt>4dd</tt> : 4 줄 지우기
+<li> <tt>dw</tt> : 한 단어 지우기
+<li> <tt>d2w</tt> : 2 단어 지우기
+<li> <tt>D</tt> : 커서 오른쪽 행 삭제
+<li> <tt>:5 d</tt> : 5 째 행 삭제
+<li> <tt>:5,10 d</tt> : 5-10 째 행 삭제
+</ul>
+
+<h4>자동 들여쓰기 켜기/끄기</h4>
+<ul>
+<li>켜기 <tt>: set autoindent</tt> 또는 <tt>: set ai</tt>
+<li>끄기 <tt>: set noautoindent</tt> 또는 <tt>: set noai</tt>
+</ul>
+
+<h4>파일의 저장 및 종료</h4>
+
+<ul>
+<li> <tt>:wq</tt> : 저장 후 vi 종료
+<li> <tt>:w</tt> : 저장 (종료는 하지 않고 계속 편집)
+<li> <tt>:q!</tt> : 저장하지 않고 vi 빠져나가기
+<li> <tt>:w filename</tt> : filename으로 저장 후 계속 편집
+<li> <tt>ZZ</tt> : 변경사항 저장 후 vi 종료 
+</ul>
+
+<h4>내용의 복사 및 이동</h4>
+
+<ul>
+<li> <tt>yy</tt> : 현재의 행 복사  
+<li> <tt>5yy</tt> : 현재의 행 위치부터 5행 복사  
+<li> <tt>p</tt> : 아래(오른쪽)에 붙여넣기 
+<li> <tt>P</tt> : 위(왼쪽)에 붙여넣기 
+<li> <tt>f4yy</tt> : 현재의 행 위치부터 4행을 'f'라는 이름의 버퍼에 복사  
+<li> <tt>fp</tt> : 'f'라는 이름의 버퍼에 복사된 내 용을 현재 행 위치에 붙여넣기
+<li> <tt>:3 co 7</tt> : 3 행을 7행 다음으로 복사
+<li> <tt>:1,3 co 7</tt> : 1-3 행을 7행 다음으로 복사
+<li> <tt>:3 m 7</tt> : 3 행을 7행 다음으로 이동
+<li> <tt>:1,3 m 7</tt> : 1-3 행을 7행 다음으로 이동
+</ul>
+
+<h4>내용 고치기</h4>
+
+<ul>
+<li> <tt>J</tt> : 현재 행과 아래 행 결합
+<li> <tt>3J</tt> : 3줄 합치기
+<li> <tt>u</tt> : 이전 명령 취소
+<li> <tt>cw</tt> : 단어 변경
+<li> <tt>cc</tt> : 행 변경
+<li> <tt>C</tt> : 커서 오른쪽의 행 변경
+<li> <tt>s</tt> : 커서가 위치한 문자열 대체
+<li> <tt>r</tt> :  한 글자만 변경 (입력 모드로 바뀌지 않음) 
+<li> <tt>R</tt> :  입력하는 대로 겹쳐써서 변경
+<li> <tt>xp</tt> : 커서 위치 문자와 오른쪽 문자 교환
+<li> <tt>-</tt> : 문자형(대,소문자) 변경
+<li> <tt>U</tt> : 행 변경사항 취소
+<li> <tt>:u</tt> : 이전의 최종행 취소
+</ul>
+
+<h4>명령 취소 및 반복</h4>
+<ul>
+<li> <tt>.</tt> : 마지막 명령 반복
+<li> <tt>2.</tt> : 마지막 명령 2회 반복
+<li> <tt>u</tt> : 마지막 명령 취소
+<li> <tt>U</tt> : 현재 줄을 저장
+</ul>
+
+<h4>행 번호 설정 및 화면표시</h4>
+
+<ul>
+<li> <tt>:set nu</tt> : 행 번호 표시
+<li> <tt>:set nonu</tt> : 행 번호 숨기기
+<li> <tt>:= </tt> : 현재 줄번호 보여주기
+<li> <tt>:/pattern/ = </tt> : pattern이 위치한 줄번호 보여주기
+</ul>
+
+<h4>시스템이 다운된 후에 파일 되살리기</h4>
+
+<ul>
+<li> <tt>vi -r </tt> : 되살릴 수 있는 모든 파일 이름 보여주기
+<li> <tt>vi -r file.txt </tt> : vi를 시작하여 지정한 파일 되살리기
+</ul>
+
+<h4>다른 파일을 파일 내로 삽입</h4>
+
+<ul>
+<li> <tt>:r filename</tt> : 커서 다음에 파일 삽입
+<li> <tt>:20 r filename</tt> : 파일을 20번째 행 다음에 삽입
+</ul>
+
+<h4>새로운 파일 편집하기</h4>
+<ul>
+<li> <tt>:e fine.txt</tt> : file.txt 편집하기
+<li> <tt>:e!</tt> : 현재의 편집중인 내용 무시하고 가장 최근에 편집한 내용 다시 편집하기
+</ul>
+
+<h4>다중 편집하기</h4>
+<ul>
+<tt>% vi file1 file2 file3</tt><br>
+혹은<br>
+<tt>:e file1 file2 file3</tt><br>
+했을 때,
+</ul>
+
+<ul>
+<li> <tt>:args</tt> : 편집 중인 파일목록 보여주기
+<li> <tt>:n[ext]</tt> : 다음 파일로 넘어가기
+<li> <tt>:prev[ious]</tt> : 이전 파일로 넘어가기
+(단 편집 중인 파일이 저장되지 않으면 다음 파일로 넘어갈 수 없다.)
+</ul>
+
+<h4>문자열 탐색 </h4>
+
+<ul>
+<li> <tt>/aaa </tt> : 'aaa' 찾기 (현재 위치부터 뒤로)
+<li> <tt>?aaa </tt> : 'aaa' 역방향 찾기 (현재 위치부터 앞으로)
+<li> <tt>/ </tt> : 가장 최근에 검색한 문자열 다시 검색
+<li> <tt>? </tt> : 가장 최근에 검색한 문자열 다시 역방향 검색
+<li> <tt>:noh </tt> : 문자열 검색 후 문자열 강조 끄기
+</ul>
+
+<h4>치환</h4>
+
+<p>vi에서 치환은 <a href="reg_ex.html">정규표현식</a>이 이용된다. 
+(실제로 이 상태에서 실행하는 명령어는 ed나 ex라는 프로그램이 처리하게 된다.
+그래서 보통 이 상태를 "ed-모드"라고 한다.) 문서에서 원하는 패턴을 찾으려면 
+바로 위에 '문자열 탐색'에서 설명된 바와 같이 <tt>/문자열 </tt> 이나 
+<tt>?문자열 </tt> 을 사용한다. 문자치환 명령은 다음과 같다.
+
+<p>[형식] <tt>:범위s/변경전/변경후/수정자  &nbsp;</tt>
+
+<p>'범위'는 명령이 실행될 범위(예: 10,20 이면 10행 부터 20행 까지)를 
+나타낸다. 's'는 치환(substitute)의 약자이며 '수정자'는 치환 명령의 
+세부사항을 결정한다. 필요한 것만 뒤에 적어주면 된다. (중복 가능)
+
+<ul>
+<li> <tt>g </tt> (global) - 한 줄에서 일치하는 부분을 여러개 찾았을 때 
+전부 치환한다. 이것을 사용하지 않으면 처음 것만 치환.
+<li> <tt>c </tt> (confirm) - 만족하는 정규표현식을 찾았을 때 치환하기 전에 
+확인한다.
+<li> <tt>i </tt> (ignore-case) - 대소문자를 구별하지 않는다.
+</ul> 
+
+<p>
+"변경전"과 "변경후"에 치환할 내용을 입력한다. "변경전"에 정규표현식을 적는다. 
+정규표현식으로 <tt>., *, ^, $, [], \(...\), \<...\>, POSIX.2 단축 표현</tt>을 
+사용할 수 있다. 여기서 여러 문자를 묶여서 단위를 만들고 찾은 내용을 기억하는 
+특수문자가 <tt>\(, \)</tt>임을 주의해야 한다. 반대로 (, )가 일반문자이다. 
+vim(VI iMproved)에서는 vi에 추가로 <tt>|, +, (?와 같은) =, {n,m}</tt>을 
+사용할 수 있지만, 앞에 <tt>\ </tt>를 붙여야 한다. 또, 
+vim에는 <tt>\i, \k, \p, \s </tt>등의 단축 표현들이 있다.
+
+<p>
+"변경후"에 <tt>\n </tt>과 <tt>& </tt>를 사용할 수 있다. 
+<tt>\n </tt>는 "변경전"에서 n번째 <tt>\(...\) </tt>에 
+대응하는 부분이고, <tt>& </tt>는 "변경전"에 만족한 전체를 나타낸다. 예를 들어, 
+<br>
+<tt>:%s/\([0-9][0-9]*\) \([Cc]hapter\)/\2 \1/  </tt><br>
+는 문서에서 12 Chapter같은 부분을 Chapter 12와 같이 치환하고,  <br>
+<tt>:%s/F[1-9][12]*/&/g </tt><br>
+는 HTML 문서에서 "F1" ~ "F12"란 단어 모두를 굵은 체로 바꿉니다. 
+(주의! &는 정규표현식의 특수문자는 아니지만 vi의 특수문자이므로, 
+문자그대로의 &를 사용하려면 대신 <tt>\& </tt>를 사용해야 한다.) 이외에도 
+(뒤를 모두 대문자로) <tt>\u </tt>나 (뒤를 모두 소문자로) <tt>\l </tt>같은 
+기능이 있다.
+
+<ul>
+<tt>:%s/aaa/bbb/g </tt> - 파일 전체(g)에서 'aaa'을 'bbb' 로 치환 
+<br>
+<tt>:%s/^M//g </tt> - 파일 전체(g)에서 <tt>^M </tt>을 삭제. 
+^M은 Ctrl+V+Enter로 입력한다. 
+<br>
+<tt>:s/aaa/bbb/ </tt> - 현재 행에서 'aaa'을 'bbb' 로 치환
+<br>
+<tt>:1,10 s/aaa/bbb/ </tt> - 1행부터 10행 까지 'aaa'을 'bbb' 로 치환
+<br>
+<tt>:1,. s/str/rep/ </tt> - 1부터 현재행까지 'aaa'를 'bbb' 로 전부 바꾸기
+<br>
+<tt>:g/감자/s//바위/gc </tt> - 각 발생 확인 후 대체
+<br>
+</ul>
+
+<ul>
+<tt>:.,$s/Fortran/\U&/g</tt> : 현재부터 마지막 라인까지 Fortran 단어를 대문자로 변환<br>
+<tt>:%s/.*/\L&</tt> : 전체 파일을 소문자로 변환한다.<br>
+<tt>:s/\<./\u&/g</tt> : 현재라인에 있는 각각 단어 첫문자를 대문자로 변경 
+</ul>
+
+<p>
+주의할 점은 치환명령어가 / 문자로 각 부분을 구분하기때문에 "변경전"이나 
+"변경후"에 / 문자를 사용하려면 \/ 같이 써야한다.  <br>
+필요하다면 / 대신 다른 
+문자를 사용해도 된다. 예를 들어, <br>
+<tt>:%s/\/usr\/local\/bin\//\/usr\/bin\//g </tt><br>
+대신 <br>
+<tt>:%s#/usr/local/bin/#/usr/bin/#g </tt> <br>
+가 알아보기 더 쉽다.
+
+
+<h4>기타</h4>
+
+한꺼번에 밀기 : v로 블럭지정해서 '>'로. 여러 탭을 들여쓰기 하려면 '(숫자), >'.<br>
+C/C++에서 쓰는 { ... } 블럭의 시작이나 끝에서 >% 하면 블럭 전체가 밀린다.<br>
+v로 영역지정 한 뒤 =를 누르면 논리 구조에 따라 자동으로 들여쓰기 된다.<br>
+gg=G<br>
+:set paste :set nopaste<br>
+
+
+<hr noshade size=1>
+<small>
+&nbsp;
+</small>
+</body>
+</html>
