@@ -79,149 +79,204 @@ z-index:-300;left:-20px;top:-20px;}
 <body>
 <base target="_blank"/>
 
-<h1>Git 사용법</h1>
+<h1>How to use Git and GitHub</h1>
 
-Git 공식 사이트 : <a href="https://git-scm.com/">https://git-scm.com/</a><br>
+Git official site : <a href="https://git-scm.com/">https://git-scm.com/</a><br>
 "Pro Git" book : <a href="https://git-scm.com/book/en/v2">https://git-scm.com/book/</a><br>
 
 
-<h2>Git 최초 설정</h2>
+<h2>Git Initial Setup</h2>
 
-Git을 설치하고 나면 Git의 사용 환경을 적절하게 설정해 주어야 한다. 환경 설정은 한 컴퓨터에서 한 번만 하면 되고, 설정한 내용은 Git을 업그레이드 해도 계속 유지된다. 또한 'git config'라는 도구로 설정 내용을 확인하고 변경할 수 있다. Git은 이 설정에 따라 동작한다. 이때 설정에 관여하는 파일은 세 개이다.
+After installing Git, it is important to configure the Git environment properly. This configuration process needs to be done only once on a computer, and the settings will be maintained even if Git is upgraded. You can use a tool called 'git config' to check and modify these settings. Git operates based on these configurations. During the setup, three files are involved:
 <ul>
-<li>/etc/gitconfig: 시스템의 모든 사용자와 모든 저장소에 적용되는 설정. git config --system 옵션으로 이 파일을 읽고 쓸 수 있다. (이 파일은 시스템 전체 설정파일이기 때문에 수정하려면 시스템의 관리자 권한이 필요하다.)</li>
-<li>~/.gitconfig, ~/.config/git/config: 특정 사용자(즉 현재 사용자)에게만 적용되는 설정. git config --global 옵션으로 이 파일을 읽고 쓸 수 있다. 특정 사용자의 모든 저장소 설정에 적용된다.</li>
-<li>.git/config : 특정 저장소에만 적용되는 설정으로 특정 저장소의 .git/ 디렉토리에 있다. --local 옵션을 사용하면 이 파일을 사용하도록 지정할 수 있으며, 기본적으로 이 옵션이 적용되어 있다. (당연히, 이 옵션을 적용하려면 해당 디렉토리로 이동한 뒤 적용한다.)</li>
+<li><b>/etc/gitconfig</b>: This file contains settings that apply to all users and repositories on the system. It can be read and modified using the 'git config --system' option. Modifying this file requires system administrator privileges as it is a system-wide configuration file.</li>
+<li><b>~/.gitconfig</b>, <b>~/.config/git/config</b>: These files contain settings that are specific to a particular user, also known as the current user. You can read and modify these files using the 'git config --global' option. These settings apply to all repositories associated with the specific user.</li>
+<li><b>.git/config</b>: This file contains settings that are specific to a particular repository. It is located in the .git/ directory of the repository. By default, the '--local' option is applied, which means the settings in this file are used. To use this file explicitly, you can specify the '--local' option after moving to the respective repository directory.</li>
 </ul>
-각 설정은 역순으로 우선시 된다.<br>
+Each setting takes precedence in reverse order, meaning that the repository-specific settings override the user-specific settings, and the user-specific settings override the system-wide settings.<br>
 
-<h3>사용자 정보 설정</h3>
-Git을 설치하고 나서 가장 먼저 해야 하는 것은 사용자이름과 이메일 주소를 설정하는 것이다. Git은 커밋할 때마다 이 정보를 사용한다. 한 번 커밋한 후에는 정보를 변경할 수 없다.<br>
+<h3>Set User Information</h3>
+The first step after installing Git is to configure your username and email address. Git utilizes this information for every commit, and once committed, it cannot be changed.<br>
+<br>
+To set up your username and email address, execute the following commands:
 <pre>
 $ git config --global user.name 'yourname'
 $ git config --global user.email 'your@email.com'
 </pre>
+Replace 'yourname' with your desired username and 'youremail@example.com' with your actual email address.
 
-<h3>설정 확인</h3>
+<h3>Check Settings</h3>
+To verify your Git settings, you can use the following command:
 <pre>$ git config --list</pre>
+Executing this command will display all the configurations you have set up, allowing you to review them immediately.<br>
+<br>
+Additionally, if you want to retrieve the value of a specific configuration key, you can use the following command:
+<pre>$ git config user.name</pre>
+This command will display the value of the 'user.name' configuration key, which represents your username. If you change your username into a specific name, use:
+<pre>$ git config user.name {yourname}</pre>
 
-명령을 실행하면 설정한 모든 것을 보여주어 바로 확인할 수 있다. 
-또한 설정된 특정 key 값을 알아보려면 다음과 같이 한다:
-<pre>$ git config user.name
-{yourname}</pre>
+<h3>Set the Default Branch Name of Newly Created Repositories to 'main' Instead of 'master'</h3>
 
-<h3>신규 생성 repository의 기본 브랜치명을 master가 아닌 main으로 지정</h3>
-
-2020년 6월, 구글의 Go 언어가 인종차별/주종 관계의 의미를 포함하는 것으로 오해할 수 있는 
-whitelist/blacklist와 master/slave라는 용어를 제거하기로 결정하면서 IT업계 전반에 이런 
-부분을 제거하자는 움직임이 일어났다. 이후 master를 기본 브랜치로 사용하던 Git에서도 
-기본 브랜치 이름을 사용자가 지정할 수 있도록 변경하였다. 이어서 GitHub도 기본 브랜치를 
-master에서 main으로 변경하기로 하였고 2020년 10월 1일부터 적용되었다. 
-기본 브랜치를 main으로 지정하려면 
-/etc/gitconfig 또는 /.gitconfig 파일에
+In June 2020, there was a movement in the IT industry to remove terms that were perceived to have racial or master-slave connotations, such as whitelist/blacklist and master/slave. This movement also impacted Git, which previously used 'master' as the default branch name.<br>
+<br>
+In order to align with these changes, Git made it possible for users to specify their own default branch name. Following suit, GitHub also decided to change the default branch name from 'master' to 'main', and this change was implemented on October 1, 2020.<br>
+<br>
+To set the default branch name to 'main', you can add the following configuration to either the '/etc/gitconfig' or '~/.gitconfig' file:
 <pre>[init]
 	defaultBranch = main</pre>
-와 같이 입력한다.
+By adding this configuration, any newly created repositories will have 'main' as the default branch instead of 'master'.
 
-<h3>편집기 설정</h3>
-기본적으로 Git은 시스템의 기본 편집기를 사용한다. 64비트 Windows 시스템에서 64비트 Notepad을 기본 편집기로 지정하려면 다음과 같이 설정한다.<br>
+<h3>Editor Settings</h3>
+By default, Git utilizes the system's default editor. However, you can configure Git to use a specific editor of your choice. For example, if you want to set 64-bit Notepad as the default editor on a 64-bit Windows system, follow these steps:
 <pre>$ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"</pre>
-이렇게 설정된 편집기로 특정 파일(예: README.md)을 열어보려면 
-<pre>$git config --global --edit README.md</pre>
-와 같이 입력한다. <br>
+With this command, you are configuring Git to use the 64-bit Notepad++ editor located at the specified path.<br>
 <br>
+To open a specific file, such as 'README.md', using the editor that has been set as the default, you can use the following command:
+<pre>$git config --global --edit README.md</pre>
+This command will open the 'README.md' file in the editor specified in the global Git configuration.
 
 
-<h2>저장소 만들기 : 디렉토리 초기화</h2>
+<h2>Create Repository: Initialize Directory</h2>
 
-특정 디렉토리를 Git 저장소로 초기화하려면 해당 디렉토리로 가서 다음과 같이 한다.
+To initialize a specific directory as a Git repository, navigate to that directory and perform the following steps:
 <pre>$ git init</pre>
-또는 
+Alternatively, if you want to create a directory named "apple" and initialize the repository within it, use the command:
 <pre>$ git init apple</pre>
-이라고 하면 apple이라는 디렉토리를 생성하고 저장소를 초기화한다. 
-설정된 저장소의 초기화를 해제하려면 
+This will create the "apple" directory and initialize the repository inside it.<br>
+<br>
+To remove the repository and undo the configuration:
 <pre>$ rm -r .git</pre>
-으로 해당 .git 폴더를 삭제하면 된다.
+This command will delete the corresponding ".git" folder, effectively uninitializing the repository.
 
-<h3>존재하는 repository에서 복사하기</h3>
-git clone {url} 명령어를 써서 이미 존재하는 저장소를 복제할 수 있다. 이를테면 
+
+
+<h3>Copy from an Existing Repository</h3>
+To clone an existing repository, use the 'git clone {url}' command. For example:
 <pre>$ git clone https://github.com/libgit2/libgit2</pre>
-과 같이 하면 libgit2라는 저장소를 .git 디렉토리와 함께 복제한다.
+This command will clone the repository named "libgit2" along with the ".git" directory.<br>
+<br>
+If you want to create a repository named "mylibgit" while cloning, use the command:
 <pre>$ git clone https://github.com/libgit2/libgit2 mylibgit</pre>
-과 같이 하면 해당 저장소를 mylibgit이라는 이름으로 생성한다.
-https:// 외에도 git://이나 SSH를 사용하는 user@server:path/to/repo.git 등의 프로토콜을 이용할 수도 있다.
+This will clone the repository and create a new directory named "mylibgit" for the cloned repository.<br>
+<br>
+In addition to using the "https://" protocol, you can also utilize other protocols such as "git://" or "user@server:path/to/repo.git" using SSH.
 
-<h3>버전 관리에서 제외하기</h3>
+<h3>Exclude from Version Control</h3>
 
-.gitignore에 제외할 파일명, 디렉토리, 확장자를 저장한다. 아래는 .gitignore 파일의 예이다.
+To exclude specific files, directories, and extensions from being tracked by Git, you can create a '.gitignore' file. This file contains patterns that Git uses to determine what should be excluded. Here's an example of a '.gitignore' file:
 <pre>
 $ cat .gitignore
 *.[oa]
 *~
 
-# 윗 라인에서 확장자가 .a인 파일은 무시하게 했지만 lib.a는 무시하지 않음
+# Exclude files with the extension .a, except for lib.a
 !lib.a
 
-# 현재 디렉토리에 있는 TODO파일은 무시하고 subdir/TODO처럼 하위디렉토리에 있는 파일은 무시하지 않음
+# Exclude TODO file in the current directory, but not in subdirectories like subdir/TODO
 /TODO
 
-# build/ 디렉토리에 있는 모든 파일은 무시
+# Exclude all files in the build/ directory
 build/
 
-# doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음
+# Exclude doc/notes.txt file, but not doc/server/arch.txt file
 doc/*.txt
 
-# doc 디렉토리 아래의 모든 .pdf 파일을 무시
+# Exclude all .pdf files under the doc directory, including subdirectories
 doc/**/*.pdf
 </pre>
-첫번째 라인은 확장자가 “.o” 나 “.a” 인 파일을 Git이 무시하라는 것이고 둘째 라인은 ~ 로 끝나는 모든 파일을 무시하라는 것이다. [abc] 는 중괄호 안에 있는 문자 중 하나를 의미한다. 디렉토리는 슬래시(/)를 끝에 사용하는 것으로 표현한다.
+In this example, the first line instructs Git to ignore files with the extensions '.o' or '.a'. The second line excludes files ending with '~'. The notation '[abc]' specifies any one of the characters inside the brackets.<br>
+<br>
+Directories are represented by using a forward slash (/) at the end. The patterns are relative to the location of the '.gitignore' file.<br>
+<br>
+By defining exclusion patterns in the '.gitignore' file, you can prevent Git from tracking certain files or directories in your repository.
 
 <br>
 
-<h2>깃으로 작업하기</h2>
+<h2>Working with Git : Record Changes</h2>
 
-리포지토리에 변경 사항 기록
+In Git, when you want to capture a specific state of your project, you begin by making changes and then commit a snapshot of those changes to the repository. Each file in the working directory can be classified as either tracked or untracked.<br>
+<br>
+Tracked files encompass two categories: the files that were included in the last snapshot and newly staged files. These tracked files can be in one of three states: unmodified, modified, or staged. In essence, a tracked file is a file that Git is aware of.<br>
+<br>
+On the other hand, untracked files refer to all the files in the working directory that are not part of the last snapshot and have not been staged. When you initially clone a repository, all files are considered tracked and unmodified since Git has checked them out, and you haven't made any edits yet.<br>
+<br>
+As you make edits to a file, Git recognizes it as modified because the file has changed since the last commit. Throughout your work, you have the option to selectively stage these modified files and subsequently commit all the staged changes.<br>
+<br>
+Thus, the cycle of Git follows the sequence of unmodified, modified (staging), and committed. This cycle repeats as you continue working on your project, capturing changes in an organized manner.
 
-Git에서는 프로젝트가 기록하려는 상태에 도달할 때마다 변경 작업을 시작하고 해당 변경 사항의 스냅샷을 리포지토리에 커밋하게 된다. 작업 디렉토리의 각 파일은 tracked 또는 untracked의 두 가지 상태 중 하나일 수 있다. tracked 파일은 마지막 스냅샷에 있던 파일과 새로 준비된 파일이다. 이것은 unmodifed, modifed 또는 staged 중 하나의 상태이다. 즉, tracked 파일이란 Git이 알고 있는 파일이다.<br>
-<br>
-untracked 파일은 마지막 스냅샷에 없고 스테이징 영역에도 없는 작업 디렉토리의 모든 파일이다. 리포지토리를 처음 복제하면 Git이 파일을 체크아웃하고 아무 것도 편집하지 않았기 때문에 모든 파일이 tracked이며 unmodifed 상태가 된다.<br>
-<br>
-이제 파일을 편집하면 마지막 커밋 이후 파일이 변경되었기 때문에 Git은 해당 파일을 modified로 간주한다. 작업하면서 이러한 수정된 파일을 선택적으로 준비(stage)한 다음 모든 단계적 변경 사항을 커밋한다. 
-이와 같이 modified &rarr; staged &rarr; commit &rarr; unmodifed의 순서로 Git의 작업 주기가 반복되는 것이다.<br>
-<br>
+To check the current status of your repository, you can use the following commands:
 
-$ git status (현재 상태 확인)<br>
-$ git status -s (현재 상태 간략히 확인)<br>
-<br>
-다음은 README.md에 '# git-howto'라고 생성하고 첫 번째 커밋을 하는 명령이다:
-<pre>
-$ echo "# git-howto" >> README.md
+<pre>$ git status
+$ git status -s</pre>
+
+The first command provides a detailed overview of the current status, while the second command gives a more concise summary.<br>
+
+
+<h3>Staging and Commit</h3>
+
+To create a new commit, you need to add the changes you want to include in the commit to the staging area. Here's an example of creating the first commit by adding a '# git-howto' line to the README.md file:
+
+<pre>$ echo "# git-howto" >> README.md
 $ git add README.md
-$ git commit -m "first commit"
-</pre>
-$ git add hello.txt (스테이징)<br>
-$ git add . (현재 저장소에서 수정된 파일을 한꺼번에 스테이지에 올리기)<br>
-$ git add -A (작업 디렉토리의 모든 수정된 파일을 스테이지에 추가하기)<br>
+$ git commit -m "first commit"</pre>
+
+You can add individual files to the staging area using the 'git add' command, like 'git add hello.txt'. To add all modified files from the current repository to the staging area at once, you can use 
+<pre>$ git add .</pre>
+The following command adds all modified files, including untracked files, to the staging area:
+<pre>$ git add -A</pre>
+
+Before committing your changes, it's important to check the files in the staging area to ensure that you have included all the desired modifications. Files in the unstaged state are not committed. You can use the 'git status' command to review the staging status of your files. Once you are satisfied with the changes in the staging area, you can commit them using the 'git commit' command:
+
+<pre>$ git commit
+$ git commit -m 'message1'</pre>
+
+The second command implies to commit with the message 'message1'.<br>
 <br>
-수정한 것을 커밋하기 위해 Staging Area에서 파일을 확인한다. Unstaged 상태의 파일은 커밋되지 않는다는 것을 기억해야 한다. Git은 생성하거나 수정하고 나서 git add 명령으로 추가하지 않은 파일은 커밋하지 않는다. 그 파일은 여전히 Modified 상태로 남아 있다. 커밋하기 전에 git status 명령으로 모든 것이 Staged 상태인지 확인할 수 있으며, 그 후에 git commit 을 실행하여 커밋한다.<br>
+To add all modified and untracked files in your working directory to the staging area and commit them, you can use the following commands:
+
+<pre>$ git commit -am 'message2'
+$ git commit -a -m 'message2'</pre>
+
+These two lines are identical in their effect. <br>
 <br>
-$ git commit (커밋하기)<br>
-$ git commit -m 'message1' (message1이라는 메세지와 함께 커밋하기)<br>
-$ git commit -am 'message2' (작업 디렉토리에 있는 모든 수정 및 추적되지 않은 파일을 스테이지에 추가하고 커밋한다)<br>
-$ git commit -a -m 'message2' (위의 것과 같다)<br>
-$ git commit --amend (최신 커밋의 메세지 수정)<br>
+
+To edit the message of the latest commit, you can use the following command:
+<pre>$ git commit --amend</pre>
+This command opens the default text editor with the previous commit message, allowing you to make changes. Note that amending a commit replaces the previous commit with a new one, so use it with caution, especially if the commit has already been pushed to a remote repository.<br>
+
+<h3>Examine the commit history</h3>
+
+To examine the commit history and track changes in Git, you can use the following commands. To view the commit history:
+<pre>$ git log</pre>
+This command displays a detailed log of all commits in the repository, including commit messages, authors, dates, and unique commit hashes.<br>
 <br>
-$ git log (커밋 기록 살펴보기)<br>
-$ git log --online (커밋 기록 한 줄에 살펴보기)<br>
-$ git log --branches (각 분기의 커밋 현황)<br>
-$ git log --graph<br>
-$ git log --online --branches --graph<br>
-$ git log --stat (커밋 기록 자세히 살펴보기)<br>
+To display a single-line summary of the commit history:
+<pre>$ git log --oneline</pre>
+This command provides a concise overview of the commit history, showing only the commit hash and the commit message.<br>
 <br>
-$ git diff (작업 트리의 버전과 커밋된 최신 버전/저장소의 차이 확인)<br>
+To show the commit status of each branch:
+<pre>$ git log --branches</pre>
+This command displays the commit history specific to each branch in the repository.<br>
 <br>
-단순히 파일이 변경됐다는 사실이 아니라 어떤 내용이 변경됐는지 살펴보려면 git status 명령이 아니라 git diff 명령을 사용해야 한다. 보통 우리는 '수정했지만, 아직 Staged 파일이 아닌 것?'과 '어떤 파일이 Staged 상태인지?'가 궁금하기 때문에 git status 명령으로도 충분하다. 더 자세하게 볼 때는 git diff 명령을 사용하는데 Patch처럼 어떤 라인을 추가했고 삭제했는지가 궁금할 때 사용한다. 단, git diff 명령은 마지막으로 커밋한 후에 수정한 것들 전부를 보여주지 않는다. git diff 는 Unstaged 상태인 것들만 보여준다. 수정한 파일을 모두 Staging Area에 넣었다면 git diff 명령은 아무것도 출력하지 않는다.<br>
+To visualize the commit history as a graph:
+<pre>$ git log --graph</pre>
+This command represents the commit history as a graph, showing branches, merges, and commit relationships.<br>
 <br>
+To combine multiple options for a comprehensive view of the commit history:
+<pre>$ git log --oneline --branches --graph</pre>
+This command combines the options to display a condensed, branch-specific commit history with a graphical representation.<br>
+<br>
+To see a summarized view of changes in the commit history:
+<pre>$ git log --stat</pre>
+This command provides a detailed overview of changes in each commit, including the number of modified files and the number of lines added or removed.<br>
+<br>
+To check the differences between the version in the working tree and the latest committed version/repository:
+<pre>$ git diff</pre>
+This command shows the differences between the current state of files in the working tree and the last committed version in the repository.<br>
+<br>
+It's important to note that the 'git diff' command shows unstaged changes, while the 'git status' command provides information about both staged and unstaged changes. Use 'git diff' to examine specific line changes or patches, and 'git status' for a high-level overview of the repository's current state.<br>
+<br>
+
 $ git checkout -- hello.txt (작업트리에서 수정한 내용을 취소. 복구할 수 없음.)<br>
 $ git checkout HEAD~1 (1단계 과거로 간다)<br>
 $ git checkout HEAD~10 (10단계 과거로 간다)<br>
@@ -366,26 +421,41 @@ $ git pull <br>
 $ git log --oneline<br>
 하면 main 브랜치에서의 HEAD &rarr; main, origin/main, origin/HEAD 의 각 상태별 HEAD의 위치 변화를 관찰할 수 있다.<br>
 
-<h3>원격 브랜치 정보 가져오기</h3>
+<h3>Get remote branch information</h3>
 
-git pull이 원격 저장소의 커밋을 가져와 지역 저장소를 갱신한다면 git fetch는 원격 브랜치의 어떤 변화가 있는가 하는 정보만 가져온다. 변경 사항을 검토한 뒤 소스를 훑어보고 로컬 저장소에 반영할지를 결정할 수 있다.<br>
+Here's the revised version with improved grammar and expression:
+
+While 'git pull' fetches commits from the remote repository to update the local repository, 'git fetch' only retrieves information about any changes in the remote branch. After reviewing the changes, you can browse the source and decide whether to commit them to the local repository.<br>
 <br>
-로컬 저장소의 디렉토리에서<br>
-$ git fetch<br>
-하면 원격 저장소에서 무언가 가져오지만 로컬에 바로 반영되지는 않는다. git log 명령을 통해 살펴보면 master &rarr; main만 보이고 원격 저장소의 origin/main이 보이지 않는다.<br>
-$ git status<br>
-를 통해 확인해보면 로컬의 현재 브랜치와 원격의 origin/main의 차이가 보이고, git pull을 통해 비로소 반영할 수 있다는 안내가 나올 것이다. 
-이때, fetch로 가져온 원격 브랜치의 최신 커밋 정보는 FETCH_HEAD라는 브랜치에 저장되어 있다. fetch해서 가져온 최신 커밋의 내용을 살펴보려면 <br>
-$ git checkout FETCH_HEAD<br>
-$ git log<br>
-이후 내용을 살펴보고 이 원격 브랜치의 최신 커밋을 로컬 저장소에 반영할지를 결정한다. 내용에 문제가 없어서 그대로 병합하려면 <br>
-$ git checkout main<br>
-$ git merge FETCH_HEAD (fetch한 뒤 로컬에 반영하지 않은 최신 커밋을 병합)<br>
+To fetch from the remote repository, navigate to a directory in your local repository and run the command:
+<pre>$ git fetch</pre>
+This command retrieves the changes from the remote repository, but doesn't apply them locally. If you use the 'git log' command, you will see that only the 'main' branch is visible, while the remote repository's 'origin/main' is not.<br>
 <br>
-한 번에 병합하려면 다음과 같이 할 수 있다 :<br>
-$ git merge origin/main (원격 main 브랜치의 커밋을 로컬에 병합)<br>
-$ git merge origin/apple (원격의 apple 브랜치의 커밋을 로컬에 병합)<br>
-<br>
+To check the differences between your local current branch and the remote 'origin/main', use the command:
+<pre>$ git status</pre>
+This will inform you of the changes and prompt you to reflect them using 'git pull'. When you run 'git fetch', the latest commit information of the remote branch is stored in a branch called 'FETCH_HEAD'. To view the contents of the latest fetched commit, use the following commands:
+<pre>$ git checkout FETCH_HEAD
+$ git log</pre>
+After reviewing the contents, you can decide whether to apply the latest commit from the remote branch to your local repository. To switch back to the 'main' branch, use:
+<pre>$ git checkout main</pre>
+To merge the latest commits that have not been reflected locally after fetching, use the command:
+<pre>$ git merge FETCH_HEAD</pre>
+If you want to merge in one step, you can directly merge the commits from the remote main branch into the local branch:
+<pre>$ git merge origin/main</pre>
+Similarly, you can merge commits from the remote 'apple' branch to the local branch:
+<pre>$ git merge origin/apple</pre>
+These commands allow you to merge changes from specific remote branches into your local repository.
+
+<h3>Change the name of repository</h3>
+To change the name of a GitHub repository while maintaining its connection to local computer, first go to the local repository and check the current remote repository URL(s):
+<pre>$ git remote -v</pre>
+This will display
+<pre>origin  https://github.com/{user-id}/{repository-name}.git (fetch)
+origin  https://github.com/{user-id}/{repository-name}.git (push)</pre>
+Now to rename the repository on GitHub, Go to the GitHub website and navigate to the repository's page. Then click on the "Settings" tab and change 
+the "Repository name" to the new name. Then update the remote URL for the local repository: 
+<pre>$ git remote set-url origin {new_repository_url}</pre>
+After this, verify that the remote URL has been updated by running $ git remote -v command again. You should see the new repository URL.
 
 <h2>GitHub에서 공동으로 작업하기</h2>
 
