@@ -46,6 +46,7 @@ function setText(sInput) {
 	if(sInput.length == 0) sReturn = '';
 
 	document.getElementById('text2').innerHTML = sReturn;
+	document.getElementById('result').innerHTML = 'Words : ' + arrLines.length;
 }
 
 window.onload=function(){
@@ -59,10 +60,10 @@ window.onload=function(){
 <h3>Hashtag Formatter</h3>
 Usage : Separate the words you want to turn into hashtags by placing them on separate lines. Each line will be considered as a single hashtag, grouping all the letters on that line together.<br>
 <br>
-<textarea id="text1"  name="text1" autocomplete="off" onkeyup="setText(this.value);">
+<textarea id='text1'  name='text1' autocomplete='off' onkeyup='setText(this.value);'>
 </textarea><br/>
-<textarea id="text2"  name="text2" autocomplete="off" readonly></textarea>
-
+<textarea id='text2'  name='text2' autocomplete='off' readonly></textarea>
+<div id='result'></div>
 <script>
 setText(document.getElementById('text1').value);
 </script>

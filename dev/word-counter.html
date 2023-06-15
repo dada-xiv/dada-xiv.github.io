@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>word-counter</title>
 <style>
 textarea {
@@ -23,7 +22,7 @@ resize: none;
 
 <script>
 function wordCount(val) {
-	var wom = val.match(/\S+/g);
+	let wom = val.match(/\S+/g);
 	return {
 		charactersNoSpaces: val.replace(/\s+/g, '').length,
 		characters: val.length,
@@ -32,8 +31,8 @@ function wordCount(val) {
 	};
 }
 
-var textarea = document.getElementById('lettercountextarea');
-var result = document.getElementById('result');
+let textarea = document.getElementById('lettercountextarea');
+let result = document.getElementById('result');
 
 result.innerHTML = (`
 	without spaces : 0
@@ -43,7 +42,7 @@ result.innerHTML = (`
 `);	
 	
 textarea.addEventListener('input', function() {
-	var wc = wordCount(this.value);
+	let wc = wordCount(this.value);
 	result.innerHTML = (`
 		without spaces : ${wc.charactersNoSpaces}
 		<br>with spaces : ${wc.characters}
