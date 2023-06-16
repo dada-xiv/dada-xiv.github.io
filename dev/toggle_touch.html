@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="cleartype" content="on">
+<title>Web Service Interface</title>
+<style>
+html{-webkit-overflow-scrolling: touch;
+/*-webkit-tap-highlight-color: #d0d0d0;*/
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%; }
+
+body{background-color:white;
+font:14px/1.5 sans-serif;
+max-width:720px;
+//text-align:justify;
+//text-justify:inter-word;
+word-wrap:break-word;
+color:black;}
+
+a{text-decoration:none;}
+a:hover{color:orange;text-decoration:underline;}
+a:link{color:#005cb3;}
+a:visited{color:#005cb3;}
+
+table{border-collapse:collapse;border:0;}
+td{vertical-align:top;text-align:left;
+word-break: break-all;
+padding:5px;border:1px solid black;}
+th{text-align:left;line-height:1;padding:2px;
+font-weight:bold;letter-spacing:0em;
+background-color:#ccc;
+border:1px solid black;}
+
+pre{background-color:#ddd;}
+
+.clear{clear:both}
+
+ul,ol{margin:0 0 .35em 0;padding:0 0 0 1.75em;}
+ul{list-style-type: square;}
+ol li{margin:0;padding:0 0 0 0em;}
+ul li{margin:0;padding:0 0 0 0em;}
+.ulsub{list-style-type:circle;padding:0 0 0 1.4em;}
+.olsub{padding:0 0 0 1.4em;}
+
+hr{height:0px;border:0;border-bottom:1px dashed #ccc;
+background-color:none;width:100%;margin:15px 0;padding:0;}
+
+sup{vertical-align: text-top;font-size:.7em;}
+sub{vertical-align: text-bottom;font-size:.7em;}
+
+blockquote{margin:2em 3em 1.5em 3em;position:relative;
+font-style:italic;line-height:1.2;color:#666;color:black;}
+blockquote::before{position:absolute;
+content:"\201C";
+font:italic bold 60px serif;color:#ddd;
+z-index:-300;left:-20px;top:-20px;}
+</style>
+</head>
+<body>
+<h1>toggle_touch.bat</h1>
+Contents of toggle_touch.bat:
+
+<pre>
+set "{your-touchscreen-device-id}"
+devcon status "%touchscreenid%" | findstr "running"
+if %errorlevel% == 0 (
+    devcon disable "%touchscreenid%"
+) else (
+    devcon enable "%touchscreenid%"
+)
+</pre>
+
+After creating a shortcut from this, modify its [Target] as
+
+<pre>
+C:\Windows\System32\cmd.exe /C "C:\Users\{username}\OneDrive\ Documents\toggle_touch.bat"
+</pre>
+
+and choose [Run] mode as 'Minimized'. You may select an icon from
+
+%SystemRoot%\System32\imageres.dll
+
+and so on.
+</body>
+</html>
