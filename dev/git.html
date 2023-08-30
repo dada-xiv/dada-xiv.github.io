@@ -299,6 +299,25 @@ $ git revert 커밋해시 (지정한 커밋 해시의 변경 이력 취소. 커�
 (기본 편집기가 나타나면 문서에 revert하면서 추가로 남겨둘 내용이 있다면 입력하고 저장)<br>
 <br>
 
+<!--
+<h2>When a specific file is ignored by GitHub</h2>
+
+When a specific file is ignored by GitHub, but there's no corresponding line in `.gitignore`, we may want to start by checking the global configuration using the following command:
+
+<pre>$ git config --global</pre>
+
+If the issue persists even after checking the global settings, we can try the following method:
+
+<pre>$ git rm --cached (file path)</pre>
+
+Use this command to remove the file from Git's index. Then proceed to run the `$ git commit` command to eliminate the file from Git's tracking process. Next, perform the following steps:
+
+<pre>$ git add .
+$ git commit</pre>
+
+This will update the file within Git's context.
+-->
+
 <h2>브랜치(분기)</h2>
 
 $ git branch (브랜치 확인)<br>
