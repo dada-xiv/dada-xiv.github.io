@@ -18,8 +18,8 @@ body{background-color:white;
 /*font:0.75em/1.4 sans-serif;*/
 font:14px/1.5 Arial, sans-serif;
 max-width:720px;
-//text-align:justify;
-//text-justify:inter-word;
+/*text-align:justify;*/
+/*text-justify:inter-word;*/
 word-wrap:break-word;
 color:black;
 counter-reset:headings;
@@ -35,7 +35,9 @@ content:counter(headings)". ";
 counter-increment:headings;
 margin-left:0em;}
 
-//h2::before{position:relative;content:"\00BB"; /*Unicode for Double Angle Quotation Mark*/ left:-2px;top:-1px;}
+/*Unicode for Double Angle Quotation Mark*/ 
+/*h2::before{position:relative;content:"\00BB"; 
+left:-2px;top:-1px;}*/
 
 pre{font-size:.9em;
 background-color:#ddd;}
@@ -87,32 +89,32 @@ Git official site : <a href="https://git-scm.com/">https://git-scm.com/</a><br>
 
 <h2>Git Initial Setup</h2>
 
-After installing Git, it is important to configure the Git environment properly. This configuration process needs to be done only once on a computer, and the settings will be maintained even if Git is upgraded. You can use a tool called 'git config' to check and modify these settings. Git operates based on these configurations. During the setup, three files are involved:
+After installing Git, it is important to configure the Git environment properly. This configuration process needs to be done only once on a computer, and the settings will be maintained even if Git is upgraded. We can use a tool called 'git config' to check and modify these settings. Git operates based on these configurations. During the setup, three files are involved:
 <ul>
 <li><b>/etc/gitconfig</b>: This file contains settings that apply to all users and repositories on the system. It can be read and modified using the 'git config --system' option. Modifying this file requires system administrator privileges as it is a system-wide configuration file.</li>
-<li><b>~/.gitconfig</b>, <b>~/.config/git/config</b>: These files contain settings that are specific to a particular user, also known as the current user. You can read and modify these files using the 'git config --global' option. These settings apply to all repositories associated with the specific user.</li>
-<li><b>.git/config</b>: This file contains settings that are specific to a particular repository. It is located in the .git/ directory of the repository. By default, the '--local' option is applied, which means the settings in this file are used. To use this file explicitly, you can specify the '--local' option after moving to the respective repository directory.</li>
+<li><b>~/.gitconfig</b>, <b>~/.config/git/config</b>: These files contain settings that are specific to a particular user, also known as the current user. We can read and modify these files using the 'git config --global' option. These settings apply to all repositories associated with the specific user.</li>
+<li><b>.git/config</b>: This file contains settings that are specific to a particular repository. It is located in the .git/ directory of the repository. By default, the '--local' option is applied, which means the settings in this file are used. To use this file explicitly, we can specify the '--local' option after moving to the respective repository directory.</li>
 </ul>
 Each setting takes precedence in reverse order, meaning that the repository-specific settings override the user-specific settings, and the user-specific settings override the system-wide settings.<br>
 
 <h3>Set User Information</h3>
-The first step after installing Git is to configure your username and email address. Git utilizes this information for every commit, and once committed, it cannot be changed.<br>
+The first step after installing Git is to configure our username and email address. Git utilizes this information for every commit, and once committed, it cannot be changed.<br>
 <br>
-To set up your username and email address, execute the following commands:
+To set up our username and email address, execute the following commands:
 <pre>
 $ git config --global user.name 'yourname'
 $ git config --global user.email 'your@email.com'
 </pre>
-Replace 'yourname' with your desired username and 'youremail@example.com' with your actual email address.
+Replace 'yourname' with the desired username and 'youremail@example.com' with the actual email address.
 
 <h3>Check Settings</h3>
-To verify your Git settings, you can use the following command:
+To verify the Git settings, we can use the following command:
 <pre>$ git config --list</pre>
-Executing this command will display all the configurations you have set up, allowing you to review them immediately.<br>
+Executing this command will display all the configurations we have set up, allowing us to review them immediately.<br>
 <br>
-Additionally, if you want to retrieve the value of a specific configuration key, you can use the following command:
+Additionally, if we want to retrieve the value of a specific configuration key, we can use the following command:
 <pre>$ git config user.name</pre>
-This command will display the value of the 'user.name' configuration key, which represents your username. If you change your username into a specific name, use:
+This command will display the value of the 'user.name' configuration key, which represents our username. If we change the username into a specific name, use:
 <pre>$ git config user.name {yourname}</pre>
 
 <h3>Set the Default Branch Name of Newly Created Repositories to 'main' Instead of 'master'</h3>
@@ -121,17 +123,17 @@ In June 2020, there was a movement in the IT industry to remove terms that were 
 <br>
 In order to align with these changes, Git made it possible for users to specify their own default branch name. Following suit, GitHub also decided to change the default branch name from 'master' to 'main', and this change was implemented on October 1, 2020.<br>
 <br>
-To set the default branch name to 'main', you can add the following configuration to either the '/etc/gitconfig' or '~/.gitconfig' file:
+To set the default branch name to 'main', we can add the following configuration to either the '/etc/gitconfig' or '~/.gitconfig' file:
 <pre>[init]
 	defaultBranch = main</pre>
 By adding this configuration, any newly created repositories will have 'main' as the default branch instead of 'master'.
 
 <h3>Editor Settings</h3>
-By default, Git utilizes the system's default editor. However, you can configure Git to use a specific editor of your choice. For example, if you want to set 64-bit Notepad as the default editor on a 64-bit Windows system, follow these steps:
+By default, Git utilizes the system's default editor. However, we can configure Git to use a specific editor of our choice. For example, if we want to set 64-bit Notepad as the default editor on a 64-bit Windows system, follow these steps:
 <pre>$ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"</pre>
-With this command, you are configuring Git to use the 64-bit Notepad++ editor located at the specified path.<br>
+With this command, we are configuring Git to use the 64-bit Notepad++ editor located at the specified path.<br>
 <br>
-To open a specific file, such as 'README.md', using the editor that has been set as the default, you can use the following command:
+To open a specific file, such as 'README.md', using the editor that has been set as the default, we can use the following command:
 <pre>$git config --global --edit README.md</pre>
 This command will open the 'README.md' file in the editor specified in the global Git configuration.
 
@@ -140,7 +142,7 @@ This command will open the 'README.md' file in the editor specified in the globa
 
 To initialize a specific directory as a Git repository, navigate to that directory and perform the following steps:
 <pre>$ git init</pre>
-Alternatively, if you want to create a directory named "apple" and initialize the repository within it, use the command:
+Alternatively, if we want to create a directory named "apple" and initialize the repository within it, use the command:
 <pre>$ git init apple</pre>
 This will create the "apple" directory and initialize the repository inside it.<br>
 <br>
@@ -155,15 +157,15 @@ To clone an existing repository, use the 'git clone {url}' command. For example:
 <pre>$ git clone https://github.com/libgit2/libgit2</pre>
 This command will clone the repository named "libgit2" along with the ".git" directory.<br>
 <br>
-If you want to create a repository named "mylibgit" while cloning, use the command:
+If we want to create a repository named "mylibgit" while cloning, use the command:
 <pre>$ git clone https://github.com/libgit2/libgit2 mylibgit</pre>
 This will clone the repository and create a new directory named "mylibgit" for the cloned repository.<br>
 <br>
-In addition to using the "https://" protocol, you can also utilize other protocols such as "git://" or "user@server:path/to/repo.git" using SSH.
+In addition to using the "https://" protocol, we can also utilize other protocols such as "git://" or "user@server:path/to/repo.git" using SSH.
 
 <h3>Exclude from Version Control</h3>
 
-To exclude specific files, directories, and extensions from being tracked by Git, you can create a '.gitignore' file. This file contains patterns that Git uses to determine what should be excluded. Here's an example of a '.gitignore' file:
+To exclude specific files, directories, and extensions from being tracked by Git, we can create a '.gitignore' file. This file contains patterns that Git uses to determine what should be excluded. Here's an example of a '.gitignore' file:
 <pre>
 $ cat .gitignore
 *.[oa]
@@ -188,23 +190,23 @@ In this example, the first line instructs Git to ignore files with the extension
 <br>
 Directories are represented by using a forward slash (/) at the end. The patterns are relative to the location of the '.gitignore' file.<br>
 <br>
-By defining exclusion patterns in the '.gitignore' file, you can prevent Git from tracking certain files or directories in your repository.
+By defining exclusion patterns in the '.gitignore' file, we can prevent Git from tracking certain files or directories in our repository.
 
 <br>
 
-<h2>Working with Git : Record Changes</h2>
+<h2>Working with Git : Staging and Commit</h2>
 
-In Git, when you want to capture a specific state of your project, you begin by making changes and then commit a snapshot of those changes to the repository. Each file in the working directory can be classified as either tracked or untracked.<br>
+In Git, when we want to capture a specific state of our project, we begin by making changes and then commit a snapshot of those changes to the repository. Each file in the working directory can be classified as either tracked or untracked.<br>
 <br>
 Tracked files encompass two categories: the files that were included in the last snapshot and newly staged files. These tracked files can be in one of three states: unmodified, modified, or staged. In essence, a tracked file is a file that Git is aware of.<br>
 <br>
-On the other hand, untracked files refer to all the files in the working directory that are not part of the last snapshot and have not been staged. When you initially clone a repository, all files are considered tracked and unmodified since Git has checked them out, and you haven't made any edits yet.<br>
+On the other hand, untracked files refer to all the files in the working directory that are not part of the last snapshot and have not been staged. When we initially clone a repository, all files are considered tracked and unmodified since Git has checked them out, and we haven't made any edits yet.<br>
 <br>
-As you make edits to a file, Git recognizes it as modified because the file has changed since the last commit. Throughout your work, you have the option to selectively stage these modified files and subsequently commit all the staged changes.<br>
+As we make edits to a file, Git recognizes it as modified because the file has changed since the last commit. Throughout our work, we have the option to selectively stage these modified files and subsequently commit all the staged changes.<br>
 <br>
-Thus, the cycle of Git follows the sequence of unmodified, modified (staging), and committed. This cycle repeats as you continue working on your project, capturing changes in an organized manner.
+Thus, the cycle of Git follows the sequence of unmodified, modified (staging), and committed. This cycle repeats as we continue working on our project, capturing changes in an organized manner.
 
-To check the current status of your repository, you can use the following commands:
+To check the current status of our repository, we can use the following commands:
 
 <pre>$ git status
 $ git status -s</pre>
@@ -212,27 +214,37 @@ $ git status -s</pre>
 The first command provides a detailed overview of the current status, while the second command gives a more concise summary.<br>
 
 
-<h3>Staging and Commit</h3>
+<h3>Actual staging and commit</h3>
 
-To create a new commit, you need to add the changes you want to include in the commit to the staging area. Here's an example of creating the first commit by adding a '# git-howto' line to the README.md file:
+To create a new commit, we need to add the changes we want to include in the commit to the staging area. Here's an example of creating the first commit by adding a '# git-howto' line to the README.md file:
 
-<pre>$ echo "# git-howto" >> README.md
-$ git add README.md
-$ git commit -m "first commit"</pre>
+<pre>$ echo "# git-howto" >> README.md</pre>
 
-You can add individual files to the staging area using the 'git add' command, like 'git add hello.txt'. To add all modified files from the current repository to the staging area at once, you can use 
+혹은 그냥 편집기를 열어서 README.md에 "# git-howto"라고 적으면 된다. 그리고 다음 명령어를 치면 비로소 staging와 commit이 된다. 이 두 줄이 Git을 사용하는 행위의 핵심 단계이다.
+
+<pre>$ git add README.md
+$ git commit</pre>
+
+그러면 vi 편집기가 떠서 메세지를 입력하라고 할 것이다. 편집기를 조작하여 조금이라도 메세지를 적어야 commit이 된다. 무엇을 수정했는지에 대한 아무런 기록을 하지 않으면 git은 commit을 시켜주지 않는다. '$ git commit'한 뒤에 vi 편집기가 뜨는 것이 귀찮고 한 줄에 커밋 기록 메세지를 적고 싶으면 다음과 같이 한다.
+
+<pre>$ git commit -m "first commit"</pre>
+
+We can add individual files to the staging area using the 'git add' command, like 'git add hello.txt'. To add all modified files from the current repository to the staging area at once, we can use 
+
 <pre>$ git add .</pre>
+
 The following command adds all modified files, including untracked files, to the staging area:
+
 <pre>$ git add -A</pre>
 
-Before committing your changes, it's important to check the files in the staging area to ensure that you have included all the desired modifications. Files in the unstaged state are not committed. You can use the 'git status' command to review the staging status of your files. Once you are satisfied with the changes in the staging area, you can commit them using the 'git commit' command:
+Before committing our changes, it's important to check the files in the staging area to ensure that we have included all the desired modifications. Files in the unstaged state are not committed. we can use the 'git status' command to review the staging status of our files. Once we are satisfied with the changes in the staging area, we can commit them using the 'git commit' command:
 
 <pre>$ git commit
 $ git commit -m 'message1'</pre>
 
 The second command implies to commit with the message 'message1'.<br>
 <br>
-To add all modified and untracked files in your working directory to the staging area and commit them, you can use the following commands:
+To add all modified and untracked files in our working directory to the staging area and commit them, we can use the following commands:
 
 <pre>$ git commit -am 'message2'
 $ git commit -a -m 'message2'</pre>
@@ -240,42 +252,25 @@ $ git commit -a -m 'message2'</pre>
 These two lines are identical in their effect. <br>
 <br>
 
-To edit the message of the latest commit, you can use the following command:
+To edit the message of the latest commit, we can use the following command:
 <pre>$ git commit --amend</pre>
-This command opens the default text editor with the previous commit message, allowing you to make changes. Note that amending a commit replaces the previous commit with a new one, so use it with caution, especially if the commit has already been pushed to a remote repository.<br>
+This command opens the default text editor with the previous commit message, allowing us to make changes. Note that amending a commit replaces the previous commit with a new one, so use it with caution, especially if the commit has already been pushed to a remote repository.<br>
 
-<h3>Examine the commit history</h3>
 
-To examine the commit history and track changes in Git, you can use the following commands. To view the commit history:
-<pre>$ git log</pre>
-This command displays a detailed log of all commits in the repository, including commit messages, authors, dates, and unique commit hashes.<br>
+<h2>Working with Git : Cancel and reset</h2>
+To cancel the modifications and restore the working directory to the state of the last commit in Git, we can use the following commands:
+
+<pre>$ git reset --hard HEAD</pre>
+
+This command will reset our working directory and staging area to match the last commit (`HEAD`). Any changes we made in our working directory will be discarded.<br>
 <br>
-To display a single-line summary of the commit history:
-<pre>$ git log --oneline</pre>
-This command provides a concise overview of the commit history, showing only the commit hash and the commit message.<br>
+
+To update the working directory to match the last commit, we can use
+<pre>$ git clean -f -d</pre>
+This command will remove untracked files and directories from our working directory. 
+The `-f` flag forces the cleaning process, and the `-d` flag indicates that directories should also be removed.<br>
 <br>
-To show the commit status of each branch:
-<pre>$ git log --branches</pre>
-This command displays the commit history specific to each branch in the repository.<br>
-<br>
-To visualize the commit history as a graph:
-<pre>$ git log --graph</pre>
-This command represents the commit history as a graph, showing branches, merges, and commit relationships.<br>
-<br>
-To combine multiple options for a comprehensive view of the commit history:
-<pre>$ git log --oneline --branches --graph</pre>
-This command combines the options to display a condensed, branch-specific commit history with a graphical representation.<br>
-<br>
-To see a summarized view of changes in the commit history:
-<pre>$ git log --stat</pre>
-This command provides a detailed overview of changes in each commit, including the number of modified files and the number of lines added or removed.<br>
-<br>
-To check the differences between the version in the working tree and the latest committed version/repository:
-<pre>$ git diff</pre>
-This command shows the differences between the current state of files in the working tree and the last committed version in the repository.<br>
-<br>
-It's important to note that the 'git diff' command shows unstaged changes, while the 'git status' command provides information about both staged and unstaged changes. Use 'git diff' to examine specific line changes or patches, and 'git status' for a high-level overview of the repository's current state.<br>
-<br>
+
 
 $ git checkout -- hello.txt (작업트리에서 수정한 내용을 취소. 복구할 수 없음.)<br>
 $ git checkout HEAD~1 (1단계 과거로 간다)<br>
@@ -283,6 +278,9 @@ $ git checkout HEAD~10 (10단계 과거로 간다)<br>
 $ git checkout 커밋해쉬 (특정 과거로 간다)<br>
 $ git checkout main (main branch로 돌아옴)<br>
 <br>
+
+
+
 $ git reset (최근 커밋과 스테이징을 하기 전 상태로 작업 트리를 되돌림)<br>
 $ git reset --mixed HEAD^<br>
 $ git reset HEAD hello2.txt (to unstage)<br>
@@ -318,7 +316,41 @@ $ git commit</pre>
 This will update the file within Git's context.
 -->
 
-<h2>브랜치(분기)</h2>
+<h2>Working with Git : Examine the commit history</h2>
+
+To examine the commit history and track changes in Git, we can use the following commands. To view the commit history:
+<pre>$ git log</pre>
+This command displays a detailed log of all commits in the repository, including commit messages, authors, dates, and unique commit hashes.<br>
+<br>
+To display a single-line summary of the commit history:
+<pre>$ git log --oneline</pre>
+This command provides a concise overview of the commit history, showing only the commit hash and the commit message.<br>
+<br>
+To show the commit status of each branch:
+<pre>$ git log --branches</pre>
+This command displays the commit history specific to each branch in the repository.<br>
+<br>
+To visualize the commit history as a graph:
+<pre>$ git log --graph</pre>
+This command represents the commit history as a graph, showing branches, merges, and commit relationships.<br>
+<br>
+To combine multiple options for a comprehensive view of the commit history:
+<pre>$ git log --oneline --branches --graph</pre>
+This command combines the options to display a condensed, branch-specific commit history with a graphical representation.<br>
+<br>
+To see a summarized view of changes in the commit history:
+<pre>$ git log --stat</pre>
+This command provides a detailed overview of changes in each commit, including the number of modified files and the number of lines added or removed.<br>
+<br>
+To check the differences between the version in the working tree and the latest committed version/repository:
+<pre>$ git diff</pre>
+This command shows the differences between the current state of files in the working tree and the last committed version in the repository.<br>
+<br>
+It's important to note that the 'git diff' command shows unstaged changes, while the 'git status' command provides information about both staged and unstaged changes. Use 'git diff' to examine specific line changes or patches, and 'git status' for a high-level overview of the repository's current state.<br>
+<br>
+
+
+<h2>Working with Git : 브랜치(분기)</h2>
 
 $ git branch (브랜치 확인)<br>
 $ git branch -v (local 브랜치의 정보를 마지막 커밋 내용과 함께 보여줌)<br>
@@ -444,26 +476,26 @@ $ git log --oneline<br>
 
 Here's the revised version with improved grammar and expression:
 
-While 'git pull' fetches commits from the remote repository to update the local repository, 'git fetch' only retrieves information about any changes in the remote branch. After reviewing the changes, you can browse the source and decide whether to commit them to the local repository.<br>
+While 'git pull' fetches commits from the remote repository to update the local repository, 'git fetch' only retrieves information about any changes in the remote branch. After reviewing the changes, we can browse the source and decide whether to commit them to the local repository.<br>
 <br>
-To fetch from the remote repository, navigate to a directory in your local repository and run the command:
+To fetch from the remote repository, navigate to a directory in our local repository and run the command:
 <pre>$ git fetch</pre>
-This command retrieves the changes from the remote repository, but doesn't apply them locally. If you use the 'git log' command, you will see that only the 'main' branch is visible, while the remote repository's 'origin/main' is not.<br>
+This command retrieves the changes from the remote repository, but doesn't apply them locally. If we use the 'git log' command, we will see that only the 'main' branch is visible, while the remote repository's 'origin/main' is not.<br>
 <br>
-To check the differences between your local current branch and the remote 'origin/main', use the command:
+To check the differences between our local current branch and the remote 'origin/main', use the command:
 <pre>$ git status</pre>
-This will inform you of the changes and prompt you to reflect them using 'git pull'. When you run 'git fetch', the latest commit information of the remote branch is stored in a branch called 'FETCH_HEAD'. To view the contents of the latest fetched commit, use the following commands:
+This will inform us of the changes and prompt us to reflect them using 'git pull'. When we run 'git fetch', the latest commit information of the remote branch is stored in a branch called 'FETCH_HEAD'. To view the contents of the latest fetched commit, use the following commands:
 <pre>$ git checkout FETCH_HEAD
 $ git log</pre>
-After reviewing the contents, you can decide whether to apply the latest commit from the remote branch to your local repository. To switch back to the 'main' branch, use:
+After reviewing the contents, we can decide whether to apply the latest commit from the remote branch to our local repository. To switch back to the 'main' branch, use:
 <pre>$ git checkout main</pre>
 To merge the latest commits that have not been reflected locally after fetching, use the command:
 <pre>$ git merge FETCH_HEAD</pre>
-If you want to merge in one step, you can directly merge the commits from the remote main branch into the local branch:
+If we want to merge in one step, we can directly merge the commits from the remote main branch into the local branch:
 <pre>$ git merge origin/main</pre>
-Similarly, you can merge commits from the remote 'apple' branch to the local branch:
+Similarly, we can merge commits from the remote 'apple' branch to the local branch:
 <pre>$ git merge origin/apple</pre>
-These commands allow you to merge changes from specific remote branches into your local repository.
+These commands allow us to merge changes from specific remote branches into our local repository.
 
 <h3>Change the name of repository</h3>
 To change the name of a GitHub repository while maintaining its connection to local computer, first go to the local repository and check the current remote repository URL(s):
@@ -474,7 +506,7 @@ origin  https://github.com/{user-id}/{repository-name}.git (push)</pre>
 Now to rename the repository on GitHub, Go to the GitHub website and navigate to the repository's page. Then click on the "Settings" tab and change 
 the "Repository name" to the new name. Then update the remote URL for the local repository: 
 <pre>$ git remote set-url origin {new_repository_url}</pre>
-After this, verify that the remote URL has been updated by running $ git remote -v command again. You should see the new repository URL.
+After this, verify that the remote URL has been updated by running $ git remote -v command again. We should see the new repository URL.
 
 <h2>GitHub에서 공동으로 작업하기</h2>
 
